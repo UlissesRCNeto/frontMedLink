@@ -60,7 +60,7 @@ const server = http.createServer((req, res) => {
         res.end(`
             <html>
                 <head>
-                    <title>Sistema Médico - Rede Local</title>
+                    <title>Sistema medlink - Rede Local</title>
                     <style>
                         body { font-family: Arial, sans-serif; margin: 40px; }
                         h1 { color: #333; }
@@ -79,14 +79,14 @@ const server = http.createServer((req, res) => {
                     </style>
                 </head>
                 <body>
-                    <h1>Sistema Médico - Disponível na Rede Local</h1>
+                    <h1>Sistema Medico - Disponivel na Rede Local</h1>
                     <div class="info">
                         <strong>IP do Servidor:</strong> ${LOCAL_IP}<br>
                         <strong>Porta:</strong> ${PORT}
                     </div>
                     <ul>
-                        <li><a href="/front/medico">Área do Médico</a></li>
-                        <li><a href="/front/paciente">Área do Paciente</a></li>
+                        <li><a href="/front/medico">Area do Medico</a></li>
+                        <li><a href="/front/paciente">Area do Paciente</a></li>
                     </ul>
                     <p><strong>URLs de acesso para outros dispositivos:</strong></p>
                     <ul>
@@ -100,7 +100,7 @@ const server = http.createServer((req, res) => {
     // Rota não encontrada
     else {
         res.writeHead(404, { 'Content-Type': 'text/html' });
-        res.end('<h1>404 - Página não encontrada</h1>');
+        res.end('<h1>404 - Pagina nao encontrada</h1>');
     }
 });
 
