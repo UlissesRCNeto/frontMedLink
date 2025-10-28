@@ -1,11 +1,194 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=420, initial-scale=1.0" />
+  <title>Tela Inicial - App Médico</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/2d634e5b57.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      background-color: #e2e8f0; /* fundo cinza claro */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .phone-screen {
+      width: 420px;
+      height: 910px;
+      border: 8px solid #222;
+      border-radius: 40px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+      overflow-y: auto;
+      background: linear-gradient(to bottom, #ecfeff, #dbeafe);
+      position: relative;
+    }
+
+    .notch {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 24px;
+      background: #222;
+      border-radius: 12px;
+      z-index: 10;
+    }
+  </style>
 </head>
 <body>
-    <h1>paciente</h1>
+
+  <div class="phone-screen">
+    <div class="notch"></div>
+
+    <!-- HEADER -->
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 pt-12 pb-6 px-6 rounded-b-[2rem] mt-5">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="h-12 w-12 rounded-full border-2 border-white flex items-center justify-center bg-white text-cyan-600 font-bold">
+            JP
+          </div>
+          <div>
+            <p class="text-white/90 text-sm">Olá,</p>
+            <h1 class="text-white font-semibold text-lg">João Paulo</h1>
+          </div>
+        </div>
+
+        <button class="relative p-2 bg-white/20 rounded-full hover:bg-white/30 transition-colors">
+          <!-- ÍCONE DE NOTIFICAÇÃO -->
+          <i class="fa-solid fa-bell text-white text-xl"></i>
+          <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+        </button>
+      </div>
+
+      <!-- BARRA DE BUSCA -->
+      <div class="relative">
+        <!-- ÍCONE DE BUSCA -->
+        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+        <input
+          type="text"
+          placeholder="Buscar médicos ou especialidades..."
+          class="pl-12 pr-4 h-12 w-full bg-white border-none shadow-md rounded-2xl focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <div class="px-6 mt-6 space-y-6 pb-20">
+
+      <!-- ACESSO RÁPIDO -->
+      <div>
+        <h2 class="mb-4 text-slate-800 font-semibold">Acesso Rápido</h2>
+        <div class="grid grid-cols-4 gap-3 text-center">
+
+          <!-- CONSULTAS -->
+          <button class="flex flex-col items-center gap-2 p-3 bg-white rounded-2xl shadow hover:shadow-md">
+            <div class="p-3 rounded-xl text-cyan-600 bg-cyan-50">
+              <i class="fa-solid fa-calendar-days text-xl"></i>
+            </div>
+            <span class="text-slate-700 text-xs">Consultas</span>
+          </button>
+
+          <!-- EXAMES -->
+          <button class="flex flex-col items-center gap-2 p-3 bg-white rounded-2xl shadow hover:shadow-md">
+            <div class="p-3 rounded-xl text-blue-600 bg-blue-50">
+              <i class="fa-solid fa-file-medical text-xl"></i>
+            </div>
+            <span class="text-slate-700 text-xs">Exames</span>
+          </button>
+
+          <!-- HISTÓRICO -->
+          <button class="flex flex-col items-center gap-2 p-3 bg-white rounded-2xl shadow hover:shadow-md">
+            <div class="p-3 rounded-xl text-emerald-600 bg-emerald-50">
+              <i class="fa-solid fa-heart-pulse text-xl"></i>
+            </div>
+            <span class="text-slate-700 text-xs">Histórico</span>
+          </button>
+
+          <!-- RECEITAS -->
+          <button class="flex flex-col items-center gap-2 p-3 bg-white rounded-2xl shadow hover:shadow-md">
+            <div class="p-3 rounded-xl text-purple-600 bg-purple-50">
+              <i class="fa-solid fa-prescription-bottle-medical text-xl"></i>
+            </div>
+            <span class="text-slate-700 text-xs">Receitas</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- PRÓXIMAS CONSULTAS -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-slate-800 font-semibold">Próximas Consultas</h2>
+          <button class="text-cyan-600 hover:text-cyan-700 flex items-center gap-1 text-sm">
+            Ver todas 
+            <i class="fa-solid fa-angles-right"></i>
+          </button>
+        </div>
+
+        <div class="space-y-3">
+
+          <!-- CONSULTA 1 -->
+          <div class="p-4 bg-white rounded-2xl shadow flex items-center gap-4 hover:shadow-md transition">
+            <div class="h-14 w-14 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg">CS</div>
+            <div class="flex-1">
+              <h3 class="text-slate-900 font-medium">Dr. Carlos Silva</h3>
+              <p class="text-slate-500 text-sm">Cardiologista</p>
+              <div class="flex items-center gap-3 mt-2 text-slate-600 text-sm">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-calendar text-cyan-600"></i>
+                  <span>26 Out</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-clock text-blue-600"></i>
+                  <span>14:30</span>
+                </div>
+              </div>
+            </div>
+            <i class="fa-solid fa-angle-right text-slate-400"></i>
+          </div>
+
+          <!-- CONSULTA 2 -->
+          <div class="p-4 bg-white rounded-2xl shadow flex items-center gap-4 hover:shadow-md transition">
+            <div class="h-14 w-14 rounded-full flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg">AP</div>
+            <div class="flex-1">
+              <h3 class="text-slate-900 font-medium">Dra. Ana Paula</h3>
+              <p class="text-slate-500 text-sm">Dermatologista</p>
+              <div class="flex items-center gap-3 mt-2 text-slate-600 text-sm">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-calendar text-cyan-600"></i>
+                  <span>28 Out</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-clock text-blue-600"></i>
+                  <span>10:00</span>
+                </div>
+              </div>
+            </div>
+            <i class="fa-solid fa-angle-right text-slate-400"></i>
+          </div>
+
+        </div>
+
+        <button class="w-full mt-4 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white shadow-md rounded-xl font-medium">
+          Agendar Nova Consulta
+        </button>
+      </div>
+    </div>
+
+    <!-- BOTÃO FLUTUANTE -->
+    <button
+      class="absolute bottom-6 right-6 w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-full shadow-2xl flex items-center justify-center transition-transform hover:scale-110"
+    >
+      <i class="fa-solid fa-camera text-white text-2xl drop-shadow-md"></i>
+    </button>
+  </div>
 </body>
 </html>
