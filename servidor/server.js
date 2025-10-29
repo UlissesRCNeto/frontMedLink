@@ -21,11 +21,14 @@ app.get('/medico', (req, res) => {
 // Rota para o front do paciente
 app.get('/paciente', (req, res) => {
     res.sendFile(path.join(pacientePath, 'index.html'));
-    console.log('get paciente acessada')
 });
 
 app.get('/medico/home', (req, res) => {
     res.sendFile(path.join(medicoPath, 'pages/home.html'));
+});
+
+app.get('/medico/paciente', (req, res) => {
+    res.sendFile(path.join(medicoPath, 'pages/paciente.html'));
 });
 
 app.get('/medico/qrcode', (req, res) => {

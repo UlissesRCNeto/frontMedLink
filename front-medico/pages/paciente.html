@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paciente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/a7f601ba2a.js" crossorigin="anonymous"></script>
+    <style>
+                .patient-photo {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+        }
+        .badge-ativo {
+            background-color: #198754;
+        }
+        .badge-inativo {
+            background-color: #6c757d;
+        }
+        .consultation-type {
+            font-size: 0.875rem;
+        }
+        .ai-summary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .ai-summary-card .card-body {
+            background: rgba(255,255,255,0.95);
+            color: #212529;
+            margin: 1px;
+            border-radius: 0 0 8px 8px;
+        }
+        .risk-factor, .recommendation {
+            border-left: 3px solid #dc3545;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .recommendation {
+            border-left-color: #198754;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <div class="row align-items-center g-0">
+                    <div class="col-auto pe-2">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="col-auto ps-0">
+                        <h4 class="card-title mb-0">MedLink</h4>
+                    </div>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/medico/home">Pacientes</a>
+                    <a class="nav-link" href="/medico/qrcode">QR Code</a>
+                    <a class="nav-link" href="">Meu Perfil</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-4">
+        <!-- Cabeçalho da Página -->
+        <div class="row mb-4">
+            <div class="col">
+                <div>
+                    <a class="btn btn-outline-secondary" >
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <a class="btn btn-outline-secondary" href="/medico/home">
+                        <i class="fas fa-times"></i> Sair
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Coluna Principal -->
+            <div class="col-lg-8">
+                <!-- Informações do Paciente -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto">
+                                <img alt="Foto do paciente" class="patient-photo" src="/medico/imgs/person.png">
+                            </div>
+                            <div class="col">
+                                <h5 class="card-title">Maria Silva Santos</h5>
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Idade:</strong> 45 anos</p>
+                                        <p class="mb-1"><strong>Sexo:</strong> Feminino</p>
+                                        <p class="mb-1"><strong>Tipo Sanguíneo:</strong> O+</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Telefone:</strong> (11) 98765-4321</p>
+                                        <p class="mb-1"><strong>Email:</strong> maria.silva@email.com</p>
+                                        <p class="mb-1"><strong>Cadastro:</strong> 15/03/2020</p>
+                                    </div>
+                                </div>
+                                <p class="mt-2 mb-0"><strong>Endereço:</strong> São Paulo, SP</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medicamentos -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-link"></i> Medicamentos em Uso
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Medicamento</th>
+                                        <th>Dosagem</th>
+                                        <th>Frequência</th>
+                                        <th>Início</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>Losartana Potássica</strong>
+                                        </td>
+                                        <td>50mg</td>
+                                        <td>1x ao dia (manhã)</td>
+                                        <td>10/01/2025</td>
+                                        <td><span class="badge bg-success">Ativo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Metformina</strong>
+                                        </td>
+                                        <td>850mg</td>
+                                        <td>2x ao dia (almoço e jantar)</td>
+                                        <td>10/01/2025</td>
+                                        <td><span class="badge bg-success">Ativo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Atorvastatina</strong>
+                                        </td>
+                                        <td>20mg</td>
+                                        <td>1x ao dia (noite)</td>
+                                        <td>15/02/2025</td>
+                                        <td><span class="badge bg-success">Ativo</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Histórico de Consultas -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-clipboard-list"></i> Histórico de Consultas
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <!-- Consulta 1 -->
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="mb-1">18/10/2025 - Dr. Carlos Mendes</h6>
+                                        <span class="badge bg-info consultation-type">Cardiologia - Retorno</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark">Hipertensão controlada</span>
+                                </div>
+                                <p class="mb-2"><strong>Diagnóstico:</strong> Hipertensão controlada</p>
+                                <p class="mb-0 text-muted">
+                                    Paciente apresenta boa resposta ao tratamento com Losartana. Pressão arterial
+                                    estável (120/80).
+                                    Manter medicação atual e retornar em 3 meses.
+                                </p>
+                            </div>
+
+                            <!-- Consulta 2 -->
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="mb-1">05/09/2025 - Dra. Ana Paula Costa</h6>
+                                        <span class="badge bg-secondary consultation-type">Endocrinologia -
+                                            Rotina</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark">Diabetes tipo 2 em controle</span>
+                                </div>
+                                <p class="mb-2"><strong>Diagnóstico:</strong> Diabetes tipo 2 em controle</p>
+                                <p class="mb-0 text-muted">
+                                    Hemoglobina glicada em 6.8%. Paciente aderindo bem à dieta e medicação.
+                                    Recomendado aumentar atividade física para 150min/semana.
+                                </p>
+                            </div>
+
+                            <!-- Consulta 3 -->
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="mb-1">22/08/2025 - Dr. Roberto Almeida</h6>
+                                        <span class="badge bg-secondary consultation-type">Clínica Geral - Rotina</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark">Dislipidemia</span>
+                                </div>
+                                <p class="mb-2"><strong>Diagnóstico:</strong> Dislipidemia</p>
+                                <p class="mb-0 text-muted">
+                                    Colesterol LDL em 145mg/dL. Iniciada Atorvastatina 20mg. Orientações dietéticas
+                                    fornecidas.
+                                    Solicitar novo lipidograma em 60 dias.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral - Resumo IA -->
+            <div class="col-lg-4">
+                <div class="card ai-summary-card">
+                    <div class="card-header bg-transparent text-white border-bottom-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <i class="fas fa-brain"></i><span class="">Resumo IA</span>
+                            <span class="badge bg-light text-dark">Atualizado: 30/10/2025</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Saúde Geral -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2">Saúde Geral</h6>
+                            <p class="mb-0">
+                                Paciente em condição estável com controle adequado das condições crônicas
+                                diagnosticadas.
+                                Aderência medicamentosa satisfatória.
+                            </p>
+                        </div>
+
+                        <!-- Fatores de Risco -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2">Fatores de Risco</h6>
+                            <div class="risk-factor">
+                                Histórico familiar de doenças cardiovasculares
+                            </div>
+                            <div class="risk-factor">
+                                Sedentarismo - atividade física abaixo do recomendado
+                            </div>
+                            <div class="risk-factor">
+                                IMC levemente acima do ideal (28.5)
+                            </div>
+                        </div>
+
+                        <!-- Recomendações -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-2">Recomendações</h6>
+                            <div class="recommendation">
+                                Aumentar gradualmente atividade física para 150 minutos semanais
+                            </div>
+                            <div class="recommendation">
+                                Consultar nutricionista para plano alimentar personalizado
+                            </div>
+                            <div class="recommendation">
+                                Manter acompanhamento trimestral com cardiologista
+                            </div>
+                            <div class="recommendation">
+                                Monitorar glicemia em jejum semanalmente
+                            </div>
+                        </div>
+
+                        <!-- Insights -->
+                        <div>
+                            <h6 class="fw-bold mb-2">Insights Principais</h6>
+                            <p class="mb-0">
+                                Análise dos últimos 6 meses mostra evolução positiva no controle glicêmico e pressórico.
+                                A adição recente de estatina deve ser monitorada para avaliação de eficácia na redução
+                                do colesterol.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
