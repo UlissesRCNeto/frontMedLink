@@ -18,11 +18,6 @@ app.get('/medico', (req, res) => {
     console.log('get medico acessada')
 });
 
-// Rota para o front do paciente
-app.get('/paciente', (req, res) => {
-    res.sendFile(path.join(pacientePath, 'index.html'));
-});
-
 app.get('/medico/home', (req, res) => {
     res.sendFile(path.join(medicoPath, 'pages/home.html'));
 });
@@ -35,26 +30,40 @@ app.get('/medico/qrcode', (req, res) => {
     res.sendFile(path.join(medicoPath, 'pages/qrcode.html'));
 });
 
+// Rota para o front do paciente
+app.get('/paciente', (req, res) => {
+    res.sendFile(path.join(pacientePath, 'index.html'));
+});
 
+app.get('/paciente/login', (req, res) => {
+    // CORREÇÃO: Verifique qual é a estrutura real da pasta front-paciente
+    const loginPath = path.join(pacientePath, '/login.html');
+    console.log('Tentando acessar:', loginPath); // Para debug
+    
+    res.sendFile(loginPath);
+});
+
+// Configuração de arquivos estáticos - CORRIGIDA
 app.use('/medico/imgs', express.static(path.join(medicoPath, 'imgs')));
 app.use('/imgs', express.static(path.join(comumPath, 'imgs')));
 app.use('/medico/pages', express.static(path.join(medicoPath, 'pages')));
 app.use('/medico/img', express.static(path.join(medicoPath, 'imgs')));
 app.use('/', express.static(comumPath));
 app.use('/medico', express.static(medicoPath));
-app.use('/paciente', express.static(pacientePath));
 
-// Função para obter o IP local
+// CORREÇÃO: Configuração correta para o paciente
+app.use('/paciente', express.static(pacientePath));
+app.use('/paciente/login', express.static(path.join(pacientePath, 'login'))); // Corrigido: pacientePath em vez de medicoPath
+app.use('/paciente/imagem', express.static(path.join(pacientePath, 'imagem')));
+
+
+// Função para obter o IP local (mantida igual)
 function getLocalIP() {
     const interfaces = os.networkInterfaces();
-
-    // Lista de adaptadores VPN comuns para ignorar
     const vpnKeywords = ['vpn', 'radmin', 'openvpn', 'tun', 'tap'];
 
-    // Primeiro, tenta encontrar Wi-Fi
     for (const devName in interfaces) {
         const iface = interfaces[devName];
-        // Verifica se é Wi-Fi e não é VPN
         if (devName.toLowerCase().includes('wi-fi') ||
             devName.toLowerCase().includes('wireless') ||
             devName.toLowerCase().includes('wlan')) {
@@ -67,11 +76,9 @@ function getLocalIP() {
         }
     }
 
-    // Se não encontrar Wi-Fi, busca por adaptadores Ethernet (excluindo VPNs)
     for (const devName in interfaces) {
         const iface = interfaces[devName];
         const isVPN = vpnKeywords.some(keyword => devName.toLowerCase().includes(keyword));
-
         if (!isVPN && (devName.toLowerCase().includes('ethernet') ||
             devName.toLowerCase().includes('lan'))) {
             for (let i = 0; i < iface.length; i++) {
@@ -83,11 +90,9 @@ function getLocalIP() {
         }
     }
 
-    // Último recurso: qualquer adaptador não VPN
     for (const devName in interfaces) {
         const iface = interfaces[devName];
         const isVPN = vpnKeywords.some(keyword => devName.toLowerCase().includes(keyword));
-
         if (!isVPN) {
             for (let i = 0; i < iface.length; i++) {
                 const alias = iface[i];
@@ -119,7 +124,7 @@ app.listen(PORT, '0.0.0.0', () => {
 🌍 ACESSO NA REDE LOCAL (outros dispositivos):
    Página inicial:  http://${localIP}:${PORT}/
    Front Médico:    http://${localIP}:${PORT}/medico
-   Front Paciente:  http://${localIP}:${PORT}/paciente
+   Front Paciente:  http://${localIP}:${PORT}/paciente/login
 
 💡 Certifique-se de que o firewall permite conexões na porta ${PORT}
     `);
