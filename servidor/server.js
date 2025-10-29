@@ -24,7 +24,19 @@ app.get('/paciente', (req, res) => {
     console.log('get paciente acessada')
 });
 
-// Servir também arquivos estáticos (CSS, JS, imagens)
+app.get('/medico/home', (req, res) => {
+    res.sendFile(path.join(medicoPath, 'pages/home.html'));
+});
+
+app.get('/medico/qrcode', (req, res) => {
+    res.sendFile(path.join(medicoPath, 'pages/qrcode.html'));
+});
+
+
+app.use('/medico/imgs', express.static(path.join(medicoPath, 'imgs')));
+app.use('/imgs', express.static(path.join(comumPath, 'imgs')));
+app.use('/medico/pages', express.static(path.join(medicoPath, 'pages')));
+app.use('/medico/img', express.static(path.join(medicoPath, 'imgs')));
 app.use('/', express.static(comumPath));
 app.use('/medico', express.static(medicoPath));
 app.use('/paciente', express.static(pacientePath));
