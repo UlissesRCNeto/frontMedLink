@@ -11,25 +11,16 @@
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/2d634e5b57.js" crossorigin="anonymous"></script>
 
-  <style>
-    body {
-      background-color: #e2e8f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: sans-serif;
-    }
-  </style>
+  <!-- CSS Externo Padrão -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-[420px]">
+  <div class="container-padrao">
     <!-- Logo -->
     <div class="flex flex-col items-center mb-8">
       <div class="mb-6">
-        <!-- Aumentei a logo de 8rem (w-32 h-32) para 12rem (w-48 h-48) -->
-        <img src="/paciente/imagem/logo.png"" alt="MedLink Logo" class="w-48 h-48 object-contain"> 
+        <img src="imagem/logo.png" alt="MedLink Logo" class="w-48 h-48 object-contain"> 
       </div>
       <p class="text-center text-slate-600 mt-2 text-base">Faça login para continuar</p>
     </div>
@@ -110,6 +101,5 @@
         : '<i class="fa-solid fa-eye-slash"></i>';
     });
   </script>
-
 </body>
 </html>

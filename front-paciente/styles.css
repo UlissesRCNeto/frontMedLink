@@ -1,0 +1,32 @@
+/* styles.css - Layout Padrão */
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e2e8f0;
+  font-family: sans-serif;
+}
+
+.container-padrao {
+  background-color: white;
+  border-radius: 1.5rem; /* rounded-3xl */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
+  padding: 2rem; /* p-8 */
+  width: 100%;
+  max-width: 420px;
+}
+  .container-padrao {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .container-padrao::-webkit-scrollbar {
+    display: none;
+  }
+
+  .container-padrao {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
