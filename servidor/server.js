@@ -41,6 +41,12 @@ app.get('/paciente/exame', (req, res) => {
     res.sendFile(examesPath);
 });
 
+app.get('/paciente/historico', (req, res) => {
+    const examesPath = path.join(pacientePath, 'historico.html');
+    console.log('Tentando acessar:', examesPath);
+    res.sendFile(examesPath);
+});
+
 app.get('/paciente/login', (req, res) => {
     // CORREÇÃO: Verifique qual é a estrutura real da pasta front-paciente
     const loginPath = path.join(pacientePath, '/login.html');
