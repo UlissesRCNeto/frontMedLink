@@ -34,6 +34,12 @@ app.get('/medico/qrcode', (req, res) => {
 app.get('/paciente', (req, res) => {
     res.sendFile(path.join(pacientePath, 'index.html'));
 });
+// NOVA ROTA PARA EXAMES
+app.get('/paciente/exame', (req, res) => {
+    const examesPath = path.join(pacientePath, 'exame.html');
+    console.log('Tentando acessar:', examesPath);
+    res.sendFile(examesPath);
+});
 
 app.get('/paciente/login', (req, res) => {
     // CORREÇÃO: Verifique qual é a estrutura real da pasta front-paciente

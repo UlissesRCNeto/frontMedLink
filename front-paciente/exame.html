@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Exames - MedLink</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/2d634e5b57.js" crossorigin="anonymous"></script>
+
+  <!-- CSS Padrão -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .container-padrao {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .container-padrao::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container-padrao {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container-padrao">
+
+    <!-- HEADER -->
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 -m-8 mb-0 pt-8 pb-6 px-8 rounded-b-[2rem]">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-white font-bold text-2xl">Meus Exames</h1>
+          <p class="text-white/90 text-sm mt-1">Gerencie seus documentos médicos</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 mt-6 space-y-6 pb-6">
+
+      <!-- BOTÃO UPLOAD -->
+      <button
+        onclick="openModal()"
+        class="w-full h-14 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl shadow-lg flex items-center justify-center gap-3 font-medium transition-all hover:scale-[1.02]"
+      >
+        <i class="fa-solid fa-upload text-xl"></i>
+        Carregar Novo Exame
+      </button>
+
+      <!-- LISTA DE EXAMES -->
+      <div>
+        <h2 class="text-slate-800 font-semibold mb-4">Exames Recentes</h2>
+        <div id="examsList" class="space-y-3">
+
+          <!-- EXAME 1 -->
+          <div class="p-4 bg-cyan-50 rounded-2xl shadow hover:shadow-md transition flex items-start gap-4">
+            <div class="p-3 rounded-xl bg-white text-cyan-600">
+              <i class="fa-solid fa-file-medical text-2xl"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-slate-900 font-medium">Hemograma Completo</h3>
+              <p class="text-slate-500 text-sm">Dr. Carlos Silva</p>
+              <div class="flex items-center gap-3 mt-2 text-slate-600 text-sm">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-calendar text-cyan-600"></i>
+                  <span>15 Out 2024</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-clock text-blue-600"></i>
+                  <span>09:30</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EXAME 2 -->
+          <div class="p-4 bg-blue-50 rounded-2xl shadow hover:shadow-md transition flex items-start gap-4">
+            <div class="p-3 rounded-xl bg-white text-blue-600">
+              <i class="fa-solid fa-x-ray text-2xl"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-slate-900 font-medium">Raio-X Tórax</h3>
+              <p class="text-slate-500 text-sm">Dra. Ana Paula</p>
+              <div class="flex items-center gap-3 mt-2 text-slate-600 text-sm">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-calendar text-cyan-600"></i>
+                  <span>20 Out 2024</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-clock text-blue-600"></i>
+                  <span>14:00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL DE UPLOAD -->
+  <div id="uploadModal" class="modal">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-md relative">
+      
+      <div id="uploadForm">
+        <button
+          onclick="closeModal()"
+          class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+        >
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+
+        <h2 class="text-slate-900 font-bold text-xl mb-4">Carregar Exame</h2>
+        
+        <div class="mb-6">
+          <label class="block text-slate-700 text-sm font-medium mb-2">
+            Selecione o arquivo PDF
+          </label>
+          <input
+            type="file"
+            id="fileInput"
+            accept=".pdf"
+            onchange="handleFileSelect()"
+            class="w-full text-sm text-slate-500 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-medium file:bg-cyan-50 file:text-cyan-600 hover:file:bg-cyan-100 cursor-pointer"
+          />
+        </div>
+
+        <div id="filePreview" class="mb-6 p-4 bg-cyan-50 rounded-xl flex items-center gap-3" style="display: none;">
+          <i class="fa-solid fa-file-pdf text-2xl text-cyan-600"></i>
+          <div class="flex-1">
+            <p id="fileName" class="text-slate-900 font-medium text-sm"></p>
+            <p id="fileSize" class="text-slate-500 text-xs"></p>
+          </div>
+        </div>
+
+        <button
+          id="uploadBtn"
+          onclick="handleUpload()"
+          disabled
+          class="w-full h-12 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        >
+          Confirmar Upload
+        </button>
+      </div>
+
+      <div id="successMessage" class="text-center py-8" style="display: none;">
+        <i class="fa-solid fa-circle-check text-green-500 text-6xl mb-4"></i>
+        <h3 class="text-slate-900 font-bold text-xl mb-2">Upload Concluído!</h3>
+        <p class="text-slate-600">Seu exame foi carregado com sucesso</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let selectedFile = null;
+
+    function openModal() {
+      document.getElementById('uploadModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('uploadModal').classList.remove('active');
+      resetForm();
+    }
+
+    function resetForm() {
+      selectedFile = null;
+      document.getElementById('fileInput').value = '';
+      document.getElementById('filePreview').style.display = 'none';
+      document.getElementById('uploadBtn').disabled = true;
+      document.getElementById('uploadForm').style.display = 'block';
+      document.getElementById('successMessage').style.display = 'none';
+    }
+
+    function handleFileSelect() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (file && file.type === 'application/pdf') {
+        selectedFile = file;
+        
+        // Mostra preview do arquivo
+        document.getElementById('fileName').textContent = file.name;
+        document.getElementById('fileSize').textContent = (file.size / 1024).toFixed(2) + ' KB';
+        document.getElementById('filePreview').style.display = 'flex';
+        document.getElementById('uploadBtn').disabled = false;
+      } else {
+        alert('Por favor, selecione apenas arquivos PDF');
+        fileInput.value = '';
+        selectedFile = null;
+      }
+    }
+
+    function handleUpload() {
+      if (!selectedFile) return;
+
+      // Cria novo card de exame
+      const examsList = document.getElementById('examsList');
+      const now = new Date();
+      
+      // Formato: "22 Out 2025"
+      const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      const date = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+      
+      const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+      const newExam = `
+        <div class="p-4 bg-emerald-50 rounded-2xl shadow hover:shadow-md transition flex items-start gap-4">
+          <div class="p-3 rounded-xl bg-white text-emerald-600">
+            <i class="fa-solid fa-file-pdf text-2xl"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-slate-900 font-medium">${selectedFile.name.replace('.pdf', '')}</h3>
+            <p class="text-slate-500 text-sm">Carregado pelo paciente</p>
+            <div class="flex items-center gap-3 mt-2 text-slate-600 text-sm">
+              <div class="flex items-center gap-1">
+                <i class="fa-solid fa-calendar text-cyan-600"></i>
+                <span>${date}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <i class="fa-solid fa-clock text-blue-600"></i>
+                <span>${time}</span>
+              </div>
+            </div>
+          </div>
+          <i class="fa-solid fa-circle-check text-green-500"></i>
+        </div>
+      `;
+
+      examsList.insertAdjacentHTML('afterbegin', newExam);
+
+      // Mostra mensagem de sucesso
+      document.getElementById('uploadForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+
+      // Fecha modal após 2 segundos
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
