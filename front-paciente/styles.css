@@ -33,14 +33,22 @@ body {
 @media (max-width: 768px) {
   body {
     align-items: flex-start;
-    padding: 0.5rem; /* Margem de segurança */
+    padding: 0.5rem;
+    /* Margem de segurança */
   }
-  
+
   .container-padrao {
-    min-height: calc(100vh - 1rem); /* Deixa 1rem de espaço */
+    min-height: calc(100vh - 1rem);
+    /* Deixa 1rem de espaço */
     max-height: none;
     border-radius: 1rem;
     max-width: 100%;
     padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .top-header {
+    padding-top: 3vh !important;
   }
 }

@@ -26,7 +26,7 @@
     </div>
 
     <!-- Formulário -->
-    <form class="space-y-6">
+    <form id="loginForm" class="space-y-6">
       <!-- Email -->
       <div class="space-y-2 relative">
         <label for="email" class="block text-sm font-medium text-slate-700">E-mail</label>
@@ -59,7 +59,7 @@
       <!-- Botão Entrar -->
       <button type="submit"
         class="w-full h-12 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl shadow-lg">
-        <a href="/paciente/">Entrar</a>
+        Entrar
       </button>
     </form>
 
@@ -87,8 +87,9 @@
     </div>
   </div>
 
-  <!-- Script para mostrar/ocultar senha -->
+  <!-- Script -->
   <script>
+    // Mostrar/ocultar senha
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
 
@@ -99,6 +100,21 @@
       this.innerHTML = type === 'password'
         ? '<i class="fa-solid fa-eye"></i>'
         : '<i class="fa-solid fa-eye-slash"></i>';
+    });
+
+    // Redirecionar quando o formulário for válido
+    const loginForm = document.getElementById('loginForm');
+    
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Verifica se os campos estão preenchidos
+      if (email && password) {
+        window.location.href = '/paciente/';
+      }
     });
   </script>
 </body>
