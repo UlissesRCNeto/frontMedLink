@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escanear QR Code - MedLink</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/2d634e5b57.js" crossorigin="anonymous"></script>
+
+  <!-- QR Code Scanner Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+  <!-- CSS Padrão -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    #reader {
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    #reader video {
+      border-radius: 1rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container-padrao">
+
+    <!-- HEADER -->
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 -m-8 mb-0 pt-8 pb-6 px-8 rounded-b-[2rem]">
+      <div class="flex items-center justify-between mb-6">
+        <a href="/paciente/" class="p-2 hover:bg-white/20 rounded-xl transition-colors">
+          <i class="fa-solid fa-arrow-left text-white text-xl"></i>
+        </a>
+        <div class="flex-1 ml-4">
+          <h1 class="text-white font-bold text-2xl">Escanear QR Code</h1>
+          <p class="text-white/90 text-sm mt-1">Aponte a câmera para o QR Code</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 mt-6 space-y-6 pb-6">
+
+      <!-- SCANNER DE QR CODE -->
+      <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-xl">
+        <div id="reader"></div>
+      </div>
+
+      <!-- INSTRUÇÕES -->
+      <div class="bg-cyan-50 rounded-2xl p-4">
+        <div class="flex items-start gap-3">
+          <i class="fa-solid fa-circle-info text-cyan-600 text-xl mt-1"></i>
+          <div>
+            <h3 class="text-slate-900 font-medium mb-1">Como usar</h3>
+            <p class="text-slate-600 text-sm">Posicione o QR Code do médico dentro da área de leitura. A câmera irá detectar automaticamente.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATUS -->
+      <div id="scanStatus" class="text-center py-4">
+        <div class="inline-flex items-center gap-2 text-slate-600">
+          <i class="fa-solid fa-circle-notch fa-spin text-cyan-600"></i>
+          <span>Aguardando leitura...</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL DE CONFIRMAÇÃO -->
+  <div id="confirmModal" class="modal">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-md relative">
+      
+      <div class="text-center mb-6">
+        <div class="mx-auto w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mb-4">
+          <i class="fa-solid fa-user-doctor text-cyan-600 text-2xl"></i>
+        </div>
+        <h2 class="text-slate-900 font-bold text-xl mb-2">Compartilhar Exames?</h2>
+        <p class="text-slate-600">Deseja compartilhar seus exames com:</p>
+      </div>
+
+      <!-- INFORMAÇÕES DO MÉDICO -->
+      <div class="bg-cyan-50 rounded-2xl p-4 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="h-12 w-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold">
+            <span id="doctorInitials">DR</span>
+          </div>
+          <div>
+            <h3 id="doctorName" class="text-slate-900 font-medium">Dr. Nome do Médico</h3>
+            <p id="doctorSpecialty" class="text-slate-600 text-sm">Especialidade</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXAMES DISPONÍVEIS -->
+      <div class="mb-6">
+        <p class="text-slate-700 text-sm font-medium mb-3">Exames que serão compartilhados:</p>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 text-slate-600 text-sm">
+            <i class="fa-solid fa-check-circle text-green-500"></i>
+            <span>Hemograma Completo</span>
+          </div>
+          <div class="flex items-center gap-2 text-slate-600 text-sm">
+            <i class="fa-solid fa-check-circle text-green-500"></i>
+            <span>Raio-X Tórax</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÕES -->
+      <div class="flex gap-3">
+        <button
+          onclick="cancelShare()"
+          class="flex-1 h-12 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium transition-colors"
+        >
+          Cancelar
+        </button>
+        <button
+          onclick="confirmShare()"
+          class="flex-1 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-medium transition-all"
+        >
+          Compartilhar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL DE SUCESSO -->
+  <div id="successModal" class="modal">
+    <div class="bg-white rounded-3xl p-6 w-full max-w-md text-center">
+      <i class="fa-solid fa-circle-check text-green-500 text-6xl mb-4"></i>
+      <h3 class="text-slate-900 font-bold text-xl mb-2">Compartilhado com Sucesso!</h3>
+      <p class="text-slate-600 mb-6">Seus exames foram compartilhados com o médico</p>
+      <button
+        onclick="closeSuccess()"
+        class="w-full h-12 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl font-medium"
+      >
+        Concluir
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let html5QrCode;
+    let scannedData = null;
+
+    // Inicializa o scanner quando a página carregar
+    window.addEventListener('load', function() {
+      html5QrCode = new Html5Qrcode("reader");
+      
+      const config = { 
+        fps: 10, 
+        qrbox: { width: 250, height: 250 },
+        aspectRatio: 1.0
+      };
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        onScanSuccess,
+        onScanError
+      ).catch(err => {
+        console.error("Erro ao iniciar câmera:", err);
+        document.getElementById('scanStatus').innerHTML = `
+          <div class="text-red-600 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Erro ao acessar a câmera</span>
+          </div>
+        `;
+      });
+    });
+
+    function onScanSuccess(decodedText, decodedResult) {
+      // Para o scanner
+      html5QrCode.stop();
+      
+      // Salva os dados escaneados
+      scannedData = decodedText;
+      
+      // Simula dados do médico (em produção viriam do QR Code)
+      const doctorData = parseDoctorData(decodedText);
+      
+      // Atualiza o modal com os dados do médico
+      document.getElementById('doctorName').textContent = doctorData.name;
+      document.getElementById('doctorSpecialty').textContent = doctorData.specialty;
+      document.getElementById('doctorInitials').textContent = doctorData.initials;
+      
+      // Atualiza status
+      document.getElementById('scanStatus').innerHTML = `
+        <div class="text-green-600 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-check-circle"></i>
+          <span>QR Code detectado!</span>
+        </div>
+      `;
+      
+      // Abre o modal de confirmação
+      document.getElementById('confirmModal').classList.add('active');
+    }
+
+    function onScanError(errorMessage) {
+      // Ignora erros de leitura contínua
+    }
+
+    function parseDoctorData(qrData) {
+      // Em produção, o QR Code conteria dados estruturados do médico
+      // Por enquanto, retorna dados simulados
+      return {
+        name: "Dr. Carlos Silva",
+        specialty: "Cardiologista",
+        initials: "CS",
+        id: qrData
+      };
+    }
+
+    function cancelShare() {
+      document.getElementById('confirmModal').classList.remove('active');
+      
+      // Reinicia o scanner
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        onScanSuccess,
+        onScanError
+      );
+      
+      document.getElementById('scanStatus').innerHTML = `
+        <div class="inline-flex items-center gap-2 text-slate-600">
+          <i class="fa-solid fa-circle-notch fa-spin text-cyan-600"></i>
+          <span>Aguardando leitura...</span>
+        </div>
+      `;
+    }
+
+    function confirmShare() {
+      // Fecha modal de confirmação
+      document.getElementById('confirmModal').classList.remove('active');
+      
+      // Aqui você faria a requisição para compartilhar os exames
+      // Simulando um delay de API
+      setTimeout(() => {
+        // Abre modal de sucesso
+        document.getElementById('successModal').classList.add('active');
+      }, 500);
+    }
+
+    function closeSuccess() {
+      document.getElementById('successModal').classList.remove('active');
+      // Redireciona de volta
+      window.location.href = '/paciente/';
+    }
+
+    // Limpa o scanner ao sair da página
+    window.addEventListener('beforeunload', function() {
+      if (html5QrCode) {
+        html5QrCode.stop();
+      }
+    });
+  </script>
+
+</body>
+</html>

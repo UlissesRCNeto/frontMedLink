@@ -41,6 +41,12 @@ app.get('/paciente/exame', (req, res) => {
     res.sendFile(examesPath);
 });
 
+app.get('/paciente/camera', (req, res) => {
+    const qrcodePath = path.join(pacientePath, 'camera.html');
+    console.log('Tentando acessar:', qrcodePath);
+    res.sendFile(qrcodePath);
+});
+
 app.get('/paciente/login', (req, res) => {
     // CORREÇÃO: Verifique qual é a estrutura real da pasta front-paciente
     const loginPath = path.join(pacientePath, '/login.html');
