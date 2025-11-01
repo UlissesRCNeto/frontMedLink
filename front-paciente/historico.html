@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Exames - MedLink</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/2d634e5b57.js" crossorigin="anonymous"></script>
+
+  <!-- CSS Padrão -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .container-padrao {
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .container-padrao::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container-padrao {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .consultation-notes {
+      color: #6b7280;
+      font-size: 0.875rem;
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+
+    .consultation-diagnosis {
+      background-color: #f9fafb;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      color: #374151;
+      margin-top: 0.5rem;
+    }
+
+    .consultation-type {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+
+    .consultation-date {
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+    
+    .consultation-doctor {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .consultation-item {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1.25rem 0;
+    }
+    
+    .consultation-item:last-child {
+      border-bottom: none;
+    }
+
+    .consultation-header {
+      background: linear-gradient(to right, #0ea5e9, #3b82f6);
+      color: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .consultation-body {
+      padding: 1.5rem;
+    }
+
+    .consultation-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-padrao">
+
+    <!-- HEADER -->
+    <div class="bg-gradient-to-r from-cyan-500 to-blue-600 -m-8 mb-0 pt-8 pb-6 px-8 rounded-b-[2rem]">
+      <div class="flex items-center justify-between mb-6">
+        <a href="/paciente/" class="p-2 hover:bg-white/20 rounded-xl transition-colors">
+          <i class="fa-solid fa-arrow-left text-white text-xl"></i>
+        </a>
+        <div class="flex-1 ml-4 top-header">
+          <h1 class="text-white font-bold text-2xl">Meus Historico Medico</h1>
+          <p class="text-white/90 text-sm mt-1">Gerencie seu historico médicos</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-6 mt-6 space-y-6 pb-6">
+      <div class="consultation-card">
+        <div class="consultation-header">
+          <i class="fas fa-clipboard-list text-white text-lg"></i>
+          <h2 class="text-white font-semibold text-lg">Histórico de Consultas</h2>
+        </div>
+
+        <div class="consultation-body">
+          <!-- Consulta 1 -->
+          <div class="consultation-item">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h3 class="consultation-date">18/10/2025</h3>
+                <p class="consultation-doctor">Dr. Carlos Mendes - Cardiologia</p>
+                <span class="consultation-type bg-cyan-100 text-cyan-800">Retorno</span>
+                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Hipertensão
+                controlada</span>
+              </div>
+              
+            </div>
+            <div class="consultation-diagnosis">
+              <strong>Diagnóstico:</strong> Hipertensão controlada
+            </div>
+            <p class="consultation-notes">
+              Paciente apresenta boa resposta ao tratamento com Losartana. Pressão arterial
+              estável (120/80). Manter medicação atual e retornar em 3 meses.
+            </p>
+          </div>
+
+          <!-- Consulta 2 -->
+          <div class="consultation-item">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h3 class="consultation-date">05/09/2025</h3>
+                <p class="consultation-doctor">Dra. Ana Paula Costa - Endocrinologia</p>
+                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Diabetes tipo 2 em
+                controle</span>
+                <span class="consultation-type bg-gray-100 text-gray-800">Rotina</span>
+              </div>
+              
+            </div>
+            <div class="consultation-diagnosis">
+              <strong>Diagnóstico:</strong> Diabetes tipo 2 em controle
+            </div>
+            <p class="consultation-notes">
+              Hemoglobina glicada em 6.8%. Paciente aderindo bem à dieta e medicação.
+              Recomendado aumentar atividade física para 150min/semana.
+            </p>
+          </div>
+
+          <!-- Consulta 3 -->
+          <div class="consultation-item">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h3 class="consultation-date">22/08/2025</h3>
+                <p class="consultation-doctor">Dr. Roberto Almeida - Clínica Geral</p>
+                <span class="consultation-type bg-gray-100 text-gray-800">Rotina</span>
+                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Dislipidemia</span>
+              </div>
+              
+            </div>
+            <div class="consultation-diagnosis">
+              <strong>Diagnóstico:</strong> Dislipidemia
+            </div>
+            <p class="consultation-notes">
+              Colesterol LDL em 145mg/dL. Iniciada Atorvastatina 20mg. Orientações dietéticas
+              fornecidas. Solicitar novo lipidograma em 60 dias.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

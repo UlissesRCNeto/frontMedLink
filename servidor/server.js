@@ -41,10 +41,10 @@ app.get('/paciente/exame', (req, res) => {
     res.sendFile(examesPath);
 });
 
-app.get('/paciente/camera', (req, res) => {
-    const qrcodePath = path.join(pacientePath, 'camera.html');
-    console.log('Tentando acessar:', qrcodePath);
-    res.sendFile(qrcodePath);
+app.get('/paciente/historico', (req, res) => {
+    const examesPath = path.join(pacientePath, 'historico.html');
+    console.log('Tentando acessar:', examesPath);
+    res.sendFile(examesPath);
 });
 
 app.get('/paciente/login', (req, res) => {
